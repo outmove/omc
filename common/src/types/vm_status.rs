@@ -379,11 +379,6 @@ macro_rules! derive_status_try_from_repr {
                 }
             }
         }
-
-        #[cfg(any(test, feature = "fuzzing"))]
-        const STATUS_CODE_VALUES: &'static [$repr_ty] = &[
-            $($value),*
-        ];
     };
 }
 
@@ -710,59 +705,4 @@ pub mod sub_status {
     pub const NFE_VECTOR_ERROR_BASE: u64 = 0;
     // Failure in BCS deserialization
     pub const NFE_BCS_SERIALIZATION_FAILURE: u64 = 0x1C5;
-}
-
-/// The `Arbitrary` impl only generates validation statuses since the full enum is too large.
-#[cfg(any(test, feature = "fuzzing"))]
-impl Arbitrary for StatusCode {
-    type Parameters = ();
-    type Strategy = BoxedStrategy<Self>;
-
-    fn arbitrary_with(_args: ()) -> Self::Strategy {
-        (any::<usize>())
-            .prop_map(|index| {
-                let status_code_value = STATUS_CODE_VALUES[index % STATUS_CODE_VALUES.len()];
-                StatusCode::try_from(status_code_value).unwrap()
-            })
-            .boxed()
-    }
-}
-
-#[test]
-fn test_status_codes() {
-    use std::collections::HashSet;
-    // Make sure that within the 0-EXECUTION_STATUS_MAX_CODE that all of the status codes succeed
-    // when they should, and fail when they should.
-    for possible_major_status_code in 0..=EXECUTION_STATUS_MAX_CODE {
-        if STATUS_CODE_VALUES.contains(&possible_major_status_code) {
-            let status = StatusCode::try_from(possible_major_status_code);
-            assert!(status.is_ok());
-            let to_major_status_code = u64::from(status.unwrap());
-            assert_eq!(possible_major_status_code, to_major_status_code);
-        } else {
-            assert!(StatusCode::try_from(possible_major_status_code).is_err())
-        }
-    }
-
-    let mut seen_statuses = HashSet::new();
-    let mut seen_codes = HashSet::new();
-    // Now make sure that all of the error codes (including any that may be out-of-range) succeed.
-    // Make sure there aren't any duplicate mappings
-    for major_status_code in STATUS_CODE_VALUES.iter() {
-        assert!(
-            !seen_codes.contains(major_status_code),
-            "Duplicate major_status_code found"
-        );
-        seen_codes.insert(*major_status_code);
-        let status = StatusCode::try_from(*major_status_code);
-        assert!(status.is_ok());
-        let unwrapped_status = status.unwrap();
-        assert!(
-            !seen_statuses.contains(&unwrapped_status),
-            "Found duplicate u64 -> Status mapping"
-        );
-        seen_statuses.insert(unwrapped_status);
-        let to_major_status_code = u64::from(unwrapped_status);
-        assert_eq!(*major_status_code, to_major_status_code);
-    }
 }

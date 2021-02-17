@@ -5,9 +5,6 @@
 
 pub mod util;
 
-#[cfg(test)]
-mod unit_tests;
-
 use anyhow::Result;
 use omc_bytecode_source_map::source_map::SourceMap;
 use common::types::{account_address::AccountAddress, language_storage::CORE_CODE_ADDRESS};

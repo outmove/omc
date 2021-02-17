@@ -625,17 +625,6 @@ fn serialize_signature_token_single_node_impl(
     Ok(())
 }
 
-#[cfg(test)]
-pub(crate) fn serialize_signature_token_unchecked(
-    binary: &mut BinaryData,
-    token: &SignatureToken,
-) -> Result<()> {
-    for token in token.preorder_traversal() {
-        serialize_signature_token_single_node_impl(binary, token)?;
-    }
-    Ok(())
-}
-
 /// Serializes a `SignatureToken`.
 ///
 /// A `SignatureToken` gets serialized as a variable size blob depending on composition.

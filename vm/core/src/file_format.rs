@@ -1555,59 +1555,6 @@ pub struct CompiledModuleMut {
     pub function_defs: Vec<FunctionDefinition>,
 }
 
-// Need a custom implementation of Arbitrary because as of proptest-derive 0.1.1, the derivation
-// doesn't work for structs with more than 10 fields.
-#[cfg(any(test, feature = "fuzzing"))]
-impl Arbitrary for CompiledScriptMut {
-    type Strategy = BoxedStrategy<Self>;
-    /// The size of the compiled script.
-    type Parameters = usize;
-
-    fn arbitrary_with(size: Self::Parameters) -> Self::Strategy {
-        (
-            (
-                vec(any::<ModuleHandle>(), 0..=size),
-                vec(any::<StructHandle>(), 0..=size),
-                vec(any::<FunctionHandle>(), 0..=size),
-            ),
-            vec(any_with::<Signature>(size), 0..=size),
-            (
-                vec(any::<Identifier>(), 0..=size),
-                vec(any::<AccountAddress>(), 0..=size),
-            ),
-            vec(any::<Kind>(), 0..=size),
-            any::<SignatureIndex>(),
-            any::<CodeUnit>(),
-        )
-            .prop_map(
-                |(
-                    (module_handles, struct_handles, function_handles),
-                    signatures,
-                    (identifiers, address_identifiers),
-                    type_parameters,
-                    parameters,
-                    code,
-                )| {
-                    // TODO actual constant generation
-                    CompiledScriptMut {
-                        module_handles,
-                        struct_handles,
-                        function_handles,
-                        function_instantiations: vec![],
-                        signatures,
-                        identifiers,
-                        address_identifiers,
-                        constant_pool: vec![],
-                        type_parameters,
-                        parameters,
-                        code,
-                    }
-                },
-            )
-            .boxed()
-    }
-}
-
 impl CompiledModuleMut {
     /// Returns the count of a specific `IndexKind`
     pub fn kind_count(&self, kind: IndexKind) -> usize {
