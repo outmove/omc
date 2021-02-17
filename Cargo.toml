@@ -12,5 +12,9 @@ license = "Apache-2.0"
 members = [
     "compiler",
     "vm",
+    "vm/core",
+    "vm/natives",
+    "vm/types",
+    "vm/borrow-graph",
     "common",
 ]
