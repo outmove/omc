@@ -3,6 +3,8 @@ name = "outmove-common"
 version = "0.1.0"
 authors = ["Wei Tang <wei@that.world>"]
 edition = "2018"
+description = "Common types for outmove."
+license = "Apache-2.0"
 
 [dependencies]
 anyhow = "1.0.38"
