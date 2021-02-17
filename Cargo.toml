@@ -11,6 +11,7 @@ license = "Apache-2.0"
 [workspace]
 members = [
     "compiler",
+    "compiler/ir/types",
     "vm",
     "vm/core",
     "vm/natives",
