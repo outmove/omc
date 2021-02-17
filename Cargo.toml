@@ -7,3 +7,9 @@ description = "A VM, compiler and bytecode definition built on top of Move."
 license = "Apache-2.0"
 
 [dependencies]
+
+[workspace]
+members = [
+    "compiler",
+    "vm",
+]
