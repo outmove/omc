@@ -701,10 +701,10 @@ impl Frame {
         let code = self.function.code();
         loop {
             for instruction in &code[self.pc as usize..] {
-                fail_point!("move_vm::interpreter_loop", |_| {
+                fail_point!("omv_core::interpreter_loop", |_| {
                     Err(
                         PartialVMError::new(StatusCode::VERIFIER_INVARIANT_VIOLATION).with_message(
-                            "Injected move_vm::interpreter verifier failure".to_owned(),
+                            "Injected omv_core::interpreter verifier failure".to_owned(),
                         ),
                     )
                 });
