@@ -15,6 +15,7 @@ members = [
     "vm/core",
     "vm/natives",
     "vm/types",
-    "vm/borrow-graph",
+    "vm/bytecode-verifier",
+    "utils/borrow-graph",
     "common",
 ]

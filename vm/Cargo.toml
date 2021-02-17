@@ -10,3 +10,4 @@ license = "Apache-2.0"
 omv-core = { version = "0.1.0", path = "core" }
 omv-types = { version = "0.1.0", path = "types" }
 omv-natives = { version = "0.1.0", path = "natives" }
+omv-bytecode-verifier = { version = "0.1.0", path = "bytecode-verifier" }
