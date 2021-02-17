@@ -13,6 +13,7 @@ members = [
     "compiler",
     "compiler/bytecode-source-map",
     "compiler/ir/types",
+    "compiler/ir/to-bytecode",
     "vm",
     "vm/core",
     "vm/natives",
