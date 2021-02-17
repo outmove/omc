@@ -7,3 +7,4 @@ description = "The virtual machine for Outmove."
 license = "Apache-2.0"
 
 [dependencies]
+omv-core = { version = "0.1.0", path = "core" }
