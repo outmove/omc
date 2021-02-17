@@ -12,6 +12,7 @@ license = "Apache-2.0"
 members = [
     "compiler",
     "compiler/bytecode-source-map",
+    "compiler/ir",
     "compiler/ir/types",
     "compiler/ir/to-bytecode",
     "vm",

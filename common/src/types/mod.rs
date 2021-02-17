@@ -1,4 +1,5 @@
 pub mod account_address;
+pub mod access_path;
 pub mod effects;
 pub mod gas_schedule;
 pub mod identifier;

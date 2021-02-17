@@ -1,0 +1,21 @@
+[package]
+name = "omc-ir"
+version = "0.1.0"
+authors = ["Wei Tang <wei@that.world>"]
+license = "Apache-2.0"
+edition = "2018"
+
+[dependencies]
+anyhow = "1.0.38"
+common = { package = "outmove-common", path = "../../common", version = "0.1.0" }
+omv-bytecode-verifier = { path = "../../vm/bytecode-verifier", version = "0.1.0" }
+omc-ir-to-bytecode = { path = "to-bytecode", version = "0.1.0" }
+omc-bytecode-source-map = { path = "../bytecode-source-map", version = "0.1.0" }
+omc-ir-types = { path = "types", version = "0.1.0" }
+omv-core = { path = "../../vm/core", version = "0.1.0" }
+bcs = "0.1.2"
+structopt = "0.3.21"
+serde_json = "1.0.62"
+
+[features]
+default = []
