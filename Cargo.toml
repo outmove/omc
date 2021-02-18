@@ -1,25 +1,37 @@
 [package]
-name = "outmove"
+name = "omc"
 version = "0.1.0"
 authors = ["Wei Tang <wei@that.world>"]
 edition = "2018"
-description = "A VM, compiler and bytecode definition built on top of Move."
+description = "The compiler for Outmove."
 license = "Apache-2.0"
 
 [dependencies]
+anyhow = "1.0.38"
+codespan = "0.8.0"
+codespan-reporting = "0.8.0"
+hex = "0.4.2"
+regex = "1.4.3"
+structopt = "0.3.21"
+difference = "2.0.0"
+petgraph = "0.5.1"
+walkdir = "2.3.1"
+tempfile = "3.2.0"
+
+omv-core = { path = "vendor/omv/core", version = "0.1" }
+omv-primitives = { path = "vendor/omv/primitives", version = "0.1.0" }
+omv-bytecode-verifier = { path = "vendor/omv/bytecode-verifier" }
+omc-ir-types = { path = "ir/types" }
+omc-ir-to-bytecode = {path = "ir/to-bytecode" }
+borrow-graph = { path = "vendor/omv/utils/borrow-graph" }
+omc-bytecode-source-map = { path = "bytecode-source-map" }
+bcs = { package = "omv-serialize", path = "vendor/omv/serialize" }
 
 [workspace]
 members = [
-    "compiler",
-    "compiler/bytecode-source-map",
-    "compiler/ir",
-    "compiler/ir/types",
-    "compiler/ir/to-bytecode",
-    "vm",
-    "vm/core",
-    "vm/natives",
-    "vm/types",
-    "vm/bytecode-verifier",
-    "utils/borrow-graph",
-    "common",
+    "bytecode-source-map",
+    "ir",
+    "ir/types",
+    "ir/to-bytecode",
 ]
+exclude = ["vendor"]
